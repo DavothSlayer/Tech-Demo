@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class DayNightCycler : MonoBehaviour
@@ -11,8 +9,6 @@ public class DayNightCycler : MonoBehaviour
 
     public DayNightData DayNightData => _dayNightData;
     public Light SunMoonLight => _sunMoonLight;
-
-    private float _currentTime;
 
     private void Awake() => UpdateState(new DayTimeState(this));
 
@@ -26,5 +22,13 @@ public class DayNightCycler : MonoBehaviour
         _currentTimeState?.OnExit();
         _currentTimeState = _targetState;
         _currentTimeState?.OnEnter();
+    }
+
+    public void OnStateFinished(ITimeState finishedState)
+    {
+        /*if (finishedState is DayTimeState)
+            UpdateState(new NightTimeState(this));
+        else if (finishedState is NightTimeState)
+            UpdateState(new DayTimeState(this));*/
     }
 }

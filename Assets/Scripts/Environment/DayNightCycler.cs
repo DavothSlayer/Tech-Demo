@@ -24,11 +24,11 @@ public class DayNightCycler : MonoBehaviour
         _currentTimeState?.OnEnter();
     }
 
-    public void OnStateFinished(ITimeState finishedState)
+    public void OnStateFinished(ITimeState _finishedState)
     {
-        /*if (finishedState is DayTimeState)
+        if (_finishedState is DayTimeState)
             UpdateState(new NightTimeState(this));
-        else if (finishedState is NightTimeState)
-            UpdateState(new DayTimeState(this));*/
+        else if (_finishedState is NightTimeState)
+            UpdateState(new DayTimeState(this));
     }
 }

@@ -2,11 +2,11 @@ using Cysharp.Threading.Tasks;
 using System;
 using UnityEngine;
 
-public class DayTimeState : ITimeState
+public class NightTimeState : ITimeState
 {
     private DayNightCycler _dayNightCycler;
 
-    public DayTimeState(DayNightCycler _cycler)
+    public NightTimeState(DayNightCycler _cycler)
     {
         this._dayNightCycler = _cycler;
     }
@@ -18,8 +18,8 @@ public class DayTimeState : ITimeState
     {
         _dayNightCycler.SunMoonLight.transform.rotation = Quaternion.Euler(0f, 0f, 0f);
 
-        _dayNightCycler.SunMoonLight.color = _dayNightCycler.DayNightData.SunColor;
-        _dayNightCycler.SunMoonLight.intensity = _dayNightCycler.DayNightData.SunLightIntensity;
+        _dayNightCycler.SunMoonLight.color = _dayNightCycler.DayNightData.MoonColor;
+        _dayNightCycler.SunMoonLight.intensity = _dayNightCycler.DayNightData.MoonLightIntensity;
 
         WaitUntilEnd().Forget();
     }

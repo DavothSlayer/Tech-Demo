@@ -1,8 +1,10 @@
 using UnityEngine;
+using Zenject;
 
 public class DayNightCycler : MonoBehaviour
 {
     private ITimeState _currentTimeState;
+    private TimeStateFactory _timeStateFactory;
 
     [SerializeField] private DayNightData _dayNightData;
     [SerializeField] private Light _sunMoonLight;
@@ -10,7 +12,15 @@ public class DayNightCycler : MonoBehaviour
     public DayNightData DayNightData => _dayNightData;
     public Light SunMoonLight => _sunMoonLight;
 
-    private void Awake() => UpdateState(new DayTimeState(this));
+    [Inject]
+    private void Construct(DayNightData data, Light sunMoonLight, TimeStateFactory timeStateFactory)
+    {
+        _dayNightData = data;
+        _sunMoonLight = sunMoonLight;
+        _timeStateFactory = timeStateFactory;
+    }
+
+    private void Start() => UpdateState(_timeStateFactory.CreateInitialState());
 
     private void Update()
     {
@@ -26,9 +36,7 @@ public class DayNightCycler : MonoBehaviour
 
     public void OnStateFinished(ITimeState _finishedState)
     {
-        if (_finishedState is DayTimeState)
-            UpdateState(new NightTimeState(this));
-        else if (_finishedState is NightTimeState)
-            UpdateState(new DayTimeState(this));
+        var nextState = _timeStateFactory.GetNextState(_currentTimeState);
+        UpdateState(nextState);
     }
 }

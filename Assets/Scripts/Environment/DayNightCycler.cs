@@ -4,23 +4,23 @@ using Zenject;
 public class DayNightCycler : MonoBehaviour
 {
     private ITimeState _currentTimeState;
-    private TimeStateFactory _timeStateFactory;
+    public TimeStateFactory _timeStateFactory { get; private set; }
 
-    [SerializeField] private DayNightData _dayNightData;
-    [SerializeField] private Light _sunMoonLight;
-
-    public DayNightData DayNightData => _dayNightData;
-    public Light SunMoonLight => _sunMoonLight;
+    public DayNightData _dayNightData { get; private set; }
+    public Transform _directionalLightRotater { get; private set; }
 
     [Inject]
-    private void Construct(DayNightData data, Light sunMoonLight, TimeStateFactory timeStateFactory)
+    public void Construct(DayNightData data, Transform directionalLightRotater, TimeStateFactory timeStateFactory)
     {
         _dayNightData = data;
-        _sunMoonLight = sunMoonLight;
+        _directionalLightRotater = directionalLightRotater;
         _timeStateFactory = timeStateFactory;
     }
 
-    private void Start() => UpdateState(_timeStateFactory.CreateInitialState());
+    private void Start() 
+    { 
+        UpdateState(_timeStateFactory.CreateInitialState());
+    }
 
     private void Update()
     {

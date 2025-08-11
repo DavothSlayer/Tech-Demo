@@ -4,25 +4,28 @@ using Zenject;
 
 public class TimeStateFactory
 {
-    private readonly DayNightCycler _cycler;
-    private readonly Dictionary<Type, Func<ITimeState>> _transitions;
+    private readonly DiContainer _container;
+    private readonly Dictionary<Type, Type> _transitions;
 
     [Inject]
-    public TimeStateFactory(DayNightCycler cycler)
+    public TimeStateFactory(DiContainer container)
     {
-        _cycler = cycler;
-        _transitions = new Dictionary<Type, Func<ITimeState>>
+        _container = container;
+
+        _transitions = new Dictionary<Type, Type>
         {
-            { typeof(DayTimeState), () => new NightTimeState(_cycler) },
-            { typeof(NightTimeState), () => new DayTimeState(_cycler) }
+            { typeof(DayTimeState), typeof(NightTimeState) },
+            { typeof(NightTimeState), typeof(DayTimeState) }
         };
     }
 
-    public ITimeState CreateInitialState() => new DayTimeState(_cycler);
+    public ITimeState CreateInitialState() => _container.Instantiate<DayTimeState>();
 
     public ITimeState GetNextState(ITimeState current)
     {
-        var type = current.GetType();
-        return _transitions.TryGetValue(type, out var factory) ? factory() : null;
+        if (_transitions.TryGetValue(current.GetType(), out var nextType))
+            return (ITimeState)_container.Instantiate(nextType);
+
+        return null;
     }
 }

@@ -628,6 +628,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _data: {fileID: 11400000, guid: 459703063bded314c89d9e79f54f5ba8, type: 2}
   _directionalLightRotater: {fileID: 1527301784}
+  _sun: {fileID: 705507994}
+  _moon: {fileID: 989114964}
 --- !u!1 &1809074723
 GameObject:
   m_ObjectHideFlags: 0

@@ -9,12 +9,17 @@ public class DayNightCycler : MonoBehaviour
     public DayNightData _dayNightData { get; private set; }
     public Transform _directionalLightRotater { get; private set; }
 
+    public Light _sun { get; private set; }
+    public Light _moon { get; private set; }
+
     [Inject]
-    public void Construct(DayNightData data, Transform directionalLightRotater, TimeStateFactory timeStateFactory)
+    public void Construct(DayNightData data, Transform directionalLightRotater, TimeStateFactory timeStateFactory, Light sun, Light moon)
     {
         _dayNightData = data;
         _directionalLightRotater = directionalLightRotater;
         _timeStateFactory = timeStateFactory;
+        _sun = sun;
+        _moon = moon;
     }
 
     private void Start() 

@@ -14,8 +14,7 @@ public class SceneInstaller : MonoInstaller
         Container.Bind<DayNightData>().FromInstance(_data).AsSingle();
         Container.Bind<Transform>().FromInstance(_directionalLightRotater).AsSingle();
 
-        Container.Bind<Light>().FromInstance(_sun).AsSingle();
-        Container.Bind<Light>().FromInstance(_moon).AsSingle();
+        Container.Bind<Light[]>().FromInstance(new[] {_sun, _moon}).AsSingle();
 
         Container.Bind<TimeStateFactory>().AsSingle();
         Container.Bind<DayNightCycler>().FromComponentInHierarchy().AsSingle();

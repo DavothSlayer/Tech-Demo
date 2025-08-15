@@ -16,7 +16,7 @@ public class NightTimeState : ITimeState
 
     public void OnEnter()
     {
-        _dayNightCycler._directionalLightRotater.transform.rotation = Quaternion.Euler(180f, 0f, 0f);
+        //_dayNightCycler._directionalLightRotater.transform.rotation = Quaternion.Euler(180f, 0f, 0f);
 
         //_dayNightCycler._directionalLightRotater.color = _dayNightCycler._dayNightData.MoonColor;
         //_dayNightCycler._directionalLightRotater.intensity = _dayNightCycler._dayNightData.MoonLightIntensity;
